@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https:; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com;">
+  <title>SneakZone - Boutique de Sneakers Premium</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-50 font-sans">
+<!-- Header -->
+<header class="bg-white shadow-lg sticky top-0 z-40">
+  <nav class="container mx-auto px-6 py-4">
+    <div class="flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <div class="text-3xl">👟</div>
+        <h1 class="text-2xl font-bold text-gray-800 cursor-pointer" onclick="showHomePage()">SneakZone</h1>
+      </div>
+      <div class="hidden md:flex items-center space-x-8">
+        <a href="#accueil" class="text-gray-700 hover:text-blue-600 transition duration-200" onclick="navigateToAccueil()">Accueil</a>
+        <a href="#nouveautes" class="text-gray-700 hover:text-blue-600 transition duration-200" onclick="navigateToNouveautes()">Nouveautés</a>
+        <a href="#marques" class="text-gray-700 hover:text-blue-600 transition duration-200" onclick="navigateToMarques()">Marques</a>
+      </div>
+      <div class="flex items-center space-x-4">
+        <button onclick="showFavorites()" class="relative text-gray-700 hover:text-blue-600 transition duration-200">
+          <span class="text-2xl">❤️</span>
+          <span id="favoritesCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center hidden">0</span>
+        </button>
+
+        <!-- User Menu -->
+        <div id="userMenu" class="hidden relative">
+          <button onclick="toggleUserDropdown()" class="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition duration-200 p-2 rounded-lg hover:bg-gray-100">
+            <span class="text-2xl">👤</span>
+            <span id="userName" class="font-medium"></span>
+            <span class="text-sm">▼</span>
+          </button>
+          <div id="userDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
+            <div class="py-2">
+              <button onclick="showProfile()" class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 transition duration-200">
+                Mon Profil
+              </button>
+              <!-- Menu admin -->
+              <button id="adminMenuItem" onclick="showAdminPanel()" class="hidden block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 transition duration-200">
+                Gestion Utilisateurs
+              </button>
+              <hr class="my-1 border-gray-200">
+              <button onclick="logout()" class="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100 transition duration-200">
+                Déconnexion
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Login Button -->
+        <button id="loginButton" onclick="openLogin()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200 font-medium">
+          Connexion
+        </button>
+
+        <button onclick="toggleCart()" class="relative text-gray-700 hover:text-blue-600 transition duration-200">
+          <span class="text-2xl">🛒</span>
+          <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center cart-badge">0</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- Main Content -->
+<main id="mainContent">
+  <!-- Hero Section -->
+  <section id="accueil" class="hero-gradient bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white py-20">
+    <div class="container mx-auto px-6 text-center">
+      <h2 class="text-5xl font-bold mb-6">Les Sneakers les Plus Hot</h2>
+      <p class="text-xl mb-8 opacity-90 max-w-2xl mx-auto">Découvrez notre collection exclusive de sneakers premium. Des dernières sorties aux classiques intemporels.</p>
+      <div class="flex justify-center space-x-4">
+        <button class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-200">
+          Découvrir la collection
+        </button>
+        <button onclick="openSignup()" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition duration-200">
+          Créer un compte
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section id="nouveautes" class="container mx-auto px-6 py-16">
+    <h3 class="text-4xl font-bold text-center text-gray-800 mb-12">Nouveautés</h3>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Product 1 -->
+      <div class="sneaker-card rounded-2xl p-6 shadow-lg card-hover">
+        <div class="text-center mb-4">
+          <div class="text-8xl mb-4">👟</div>
+          <div class="text-sm text-gray-500 mb-2">NIKE</div>
+          <h4 class="text-xl font-bold text-gray-800 mb-2">Air Jordan 1 Retro High</h4>
+          <p class="text-gray-600 text-sm mb-4">Chicago - Rouge/Blanc/Noir</p>
+        </div>
+        <div class="flex justify-between items-center mb-4">
+          <div class="price-tag text-white px-3 py-1 rounded-full text-sm font-bold">179€</div>
+          <div class="text-sm text-gray-500">Tailles: 38-46</div>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="toggleFavorite(1, 'Air Jordan 1 Retro High', 179, 'NIKE', 'Chicago - Rouge/Blanc/Noir', '👟')"
+                  class="favorite-btn flex-shrink-0 p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition duration-200"
+                  data-product-name="Air Jordan 1 Retro High">
+            <span class="text-xl">🤍</span>
+          </button>
+          <button onclick="addToCart('Air Jordan 1 Retro High', 179)"
+                  class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition duration-200">
+            Ajouter au Panier
+          </button>
+        </div>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="sneaker-card rounded-2xl p-6 shadow-lg card-hover">
+        <div class="text-center mb-4">
+          <div class="text-8xl mb-4">🏃</div>
+          <div class="text-sm text-gray-500 mb-2">ADIDAS</div>
+          <h4 class="text-xl font-bold text-gray-800 mb-2">Yeezy Boost 350 V2</h4>
+          <p class="text-gray-600 text-sm mb-4">Zebra - Blanc/Noir</p>
+        </div>
+        <div class="flex justify-between items-center mb-4">
+          <div class="price-tag text-white px-3 py-1 rounded-full text-sm font-bold">249€</div>
+          <div class="text-sm text-gray-500">Tailles: 36-45</div>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="toggleFavorite(2, 'Yeezy Boost 350 V2', 249, 'ADIDAS', 'Zebra - Blanc/Noir', '🏃')"
+                  class="favorite-btn flex-shrink-0 p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition duration-200"
+                  data-product-name="Yeezy Boost 350 V2">
+            <span class="text-xl">🤍</span>
+          </button>
+          <button onclick="addToCart('Yeezy Boost 350 V2', 249)"
+                  class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition duration-200">
+            Ajouter au Panier
+          </button>
+        </div>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="sneaker-card rounded-2xl p-6 shadow-lg card-hover">
+        <div class="text-center mb-4">
+          <div class="text-8xl mb-4">⚡</div>
+          <div class="text-sm text-gray-500 mb-2">NIKE</div>
+          <h4 class="text-xl font-bold text-gray-800 mb-2">Air Max 90</h4>
+          <p class="text-gray-600 text-sm mb-4">Triple White</p>
+        </div>
+        <div class="flex justify-between items-center mb-4">
+          <div class="price-tag text-white px-3 py-1 rounded-full text-sm font-bold">129€</div>
+          <div class="text-sm text-gray-500">Tailles: 37-47</div>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="toggleFavorite(3, 'Air Max 90', 129, 'NIKE', 'Triple White', '⚡')"
+                  class="favorite-btn flex-shrink-0 p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition duration-200"
+                  data-product-name="Air Max 90">
+            <span class="text-xl">🤍</span>
+          </button>
+          <button onclick="addToCart('Air Max 90', 129)"
+                  class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition duration-200">
+            Ajouter au Panier
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brands Section -->
+  <section id="marques" class="bg-white py-16">
+    <div class="container mx-auto px-6">
+      <h3 class="text-4xl font-bold text-center text-gray-800 mb-12">Nos Marques</h3>
+      <div class="grid md:grid-cols-4 gap-8">
+        <div class="text-center p-8 rounded-2xl bg-gray-50 card-hover">
+          <div class="text-6xl mb-4">✓</div>
+          <h4 class="text-xl font-bold text-gray-800">Nike</h4>
+          <p class="text-gray-600 text-sm">Just Do It</p>
+        </div>
+        <div class="text-center p-8 rounded-2xl bg-gray-50 card-hover">
+          <div class="text-6xl mb-4">⚡</div>
+          <h4 class="text-xl font-bold text-gray-800">Adidas</h4>
+          <p class="text-gray-600 text-sm">3 Stripes</p>
+        </div>
+        <div class="text-center p-8 rounded-2xl bg-gray-50 card-hover">
+          <div class="text-6xl mb-4">🔥</div>
+          <h4 class="text-xl font-bold text-gray-800">Jordan</h4>
+          <p class="text-gray-600 text-sm">Jumpman</p>
+        </div>
+        <div class="text-center p-8 rounded-2xl bg-gray-50 card-hover">
+          <div class="text-6xl mb-4">⭐</div>
+          <h4 class="text-xl font-bold text-gray-800">Converse</h4>
+          <p class="text-gray-600 text-sm">All Star</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="bg-gray-100 py-16">
+    <div class="container mx-auto px-6">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <div class="text-5xl mb-4">🚚</div>
+          <h4 class="text-xl font-bold text-gray-800 mb-2">Livraison Gratuite</h4>
+          <p class="text-gray-600">Dès 75€ d'achat</p>
+        </div>
+        <div class="text-center">
+          <div class="text-5xl mb-4">🔄</div>
+          <h4 class="text-xl font-bold text-gray-800 mb-2">Retour Gratuit</h4>
+          <p class="text-gray-600">30 jours pour changer d'avis</p>
+        </div>
+        <div class="text-center">
+          <div class="text-5xl mb-4">🛡️</div>
+          <h4 class="text-xl font-bold text-gray-800 mb-2">Authenticité Garantie</h4>
+          <p class="text-gray-600">100% authentique ou remboursé</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Favorites Page -->
+<div id="favoritesPage" class="hidden">
+  <div class="container mx-auto px-6 py-16">
+    <div class="bg-white rounded-2xl shadow-lg p-8">
+      <div class="flex justify-between items-center mb-8">
+        <h2 class="text-3xl font-bold text-gray-800">Mes Favoris</h2>
+        <button onclick="UI.showHomePage()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200">
+          Retour à l'accueil
+        </button>
+      </div>
+      <div id="favoritesGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="text-center py-16">
+          <div class="text-6xl mb-4">💔</div>
+          <h3 class="text-xl font-semibold text-gray-600 mb-2">Aucun favori</h3>
+          <p class="text-gray-500">Ajoutez des sneakers à vos favoris pour les retrouver ici !</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Admin Panel -->
+<div id="adminPanel" class="hidden">
+  <div class="container mx-auto px-6 py-16">
+    <div class="bg-white rounded-2xl shadow-lg p-8">
+      <div class="flex justify-between items-center mb-8">
+        <h2 class="text-3xl font-bold text-gray-800">Gestion des Utilisateurs</h2>
+        <button onclick="showHomePage()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200">
+          Retour à l'accueil
+        </button>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-blue-50 p-6 rounded-lg">
+          <h3 class="text-lg font-semibold text-blue-800 mb-2">Total Utilisateurs</h3>
+          <p id="totalUsers" class="text-3xl font-bold text-blue-600">0</p>
+        </div>
+        <div class="bg-green-50 p-6 rounded-lg">
+          <h3 class="text-lg font-semibold text-green-800 mb-2">Administrateurs</h3>
+          <p id="totalAdmins" class="text-3xl font-bold text-green-600">0</p>
+        </div>
+        <div class="bg-purple-50 p-6 rounded-lg">
+          <h3 class="text-lg font-semibold text-purple-800 mb-2">Utilisateurs Standard</h3>
+          <p id="totalRegularUsers" class="text-3xl font-bold text-purple-600">0</p>
+        </div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full bg-white rounded-lg overflow-hidden shadow">
+          <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Utilisateur</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date d'inscription</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+          </tr>
+          </thead>
+          <tbody id="usersTableBody" class="bg-white divide-y divide-gray-200">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Login Modal -->
+<div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+  <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl relative">
+    <button onclick="closeLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl">×</button>
+    <div class="text-center mb-8">
+      <h2 class="text-3xl font-bold text-gray-800 mb-2">Connexion</h2>
+      <p class="text-gray-600">Connectez-vous à votre compte SneakZone</p>
+    </div>
+    <form id="loginForm" class="space-y-6">
+      <div>
+        <label for="loginEmail" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+        <input type="email" id="loginEmail" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" placeholder="votre@email.com">
+      </div>
+      <div>
+        <label for="loginPassword" class="block text-sm font-medium text-gray-700 mb-2">Mot de passe</label>
+        <input type="password" id="loginPassword" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" placeholder="••••••••">
+      </div>
+      <div class="flex items-center">
+        <input type="checkbox" id="remember" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+        <label for="remember" class="ml-2 block text-sm text-gray-700">Se souvenir de moi</label>
+      </div>
+      <div id="loginError" class="hidden bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm"></div>
+      <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-medium transition duration-200 hover:bg-blue-700">
+        Se connecter
+      </button>
+    </form>
+    <div class="mt-6 text-center">
+      <p class="text-gray-600">Pas encore de compte ?
+        <button onclick="openSignup()" class="text-blue-600 hover:text-blue-700 font-medium">Créer un compte</button>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Signup Modal -->
+<div id="signupModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+  <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl relative">
+    <button onclick="closeSignup()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl">×</button>
+    <div class="text-center mb-8">
+      <h2 class="text-3xl font-bold text-gray-800 mb-2">Inscription</h2>
+      <p class="text-gray-600">Créez votre compte SneakZone</p>
+    </div>
+    <form id="signupForm" class="space-y-6">
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label for="signupFirstName" class="block text-sm font-medium text-gray-700 mb-2">Prénom</label>
+          <input type="text" id="signupFirstName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" placeholder="Jean">
+        </div>
+        <div>
+          <label for="signupLastName" class="block text-sm font-medium text-gray-700 mb-2">Nom</label>
+          <input type="text" id="signupLastName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" placeholder="Dupont">
+        </div>
+      </div>
+      <div>
+        <label for="signupEmail" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+        <input type="email" id="signupEmail" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" placeholder="votre@email.com">
+      </div>
+      <div>
+        <label for="signupPassword" class="block text-sm font-medium text-gray-700 mb-2">Mot de passe</label>
+        <input type="password" id="signupPassword" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" placeholder="••••••••">
+        <div class="mt-2 text-xs text-gray-600">
+          <p>Le mot de passe doit contenir :</p>
+          <ul class="list-disc list-inside mt-1 space-y-1">
+            <li>Au moins 8 caractères</li>
+            <li>Au moins une majuscule et une minuscule</li>
+            <li>Au moins un chiffre</li>
+            <li>Au moins un caractère spécial (!@#$%^&amp;*(),.?":{}|&lt;&gt;)</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <label for="signupConfirmPassword" class="block text-sm font-medium text-gray-700 mb-2">Confirmer le mot de passe</label>
+        <input type="password" id="signupConfirmPassword" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" placeholder="••••••••">
+      </div>
+      <div class="flex items-center">
+        <input type="checkbox" id="terms" required class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+        <label for="terms" class="ml-2 block text-sm text-gray-700">J'accepte les conditions d'utilisation</label>
+      </div>
+      <div id="signupError" class="hidden bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm"></div>
+      <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-medium transition duration-200 hover:bg-blue-700">
+        Créer mon compte
+      </button>
+    </form>
+    <div class="mt-6 text-center">
+      <p class="text-gray-600">Déjà un compte ?
+        <button onclick="switchToLogin()" class="text-blue-600 hover:text-blue-700 font-medium">Se connecter</button>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Cart Sidebar -->
+<div id="cartSidebar" class="fixed right-0 top-0 h-full w-80 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50">
+  <div class="p-6 border-b">
+    <div class="flex justify-between items-center">
+      <h3 class="text-xl font-bold">Mon Panier</h3>
+      <button onclick="toggleCart()" class="text-gray-500 hover:text-gray-700">
+        <span class="text-2xl">×</span>
+      </button>
+    </div>
+  </div>
+  <div id="cartItems" class="p-6 flex-1 overflow-y-auto">
+    <p class="text-gray-500 text-center">Votre panier est vide</p>
+  </div>
+  <div class="p-6 border-t">
+    <div class="flex justify-between items-center mb-4">
+      <span class="font-bold">Total:</span>
+      <span id="cartTotal" class="font-bold text-xl">0€</span>
+    </div>
+    <button id="checkoutButton" onclick="App.checkout()" class="w-full bg-blue-600 text-white py-3 rounded-lg font-medium transition duration-200 hover:bg-blue-700">
+      Commander
+    </button>
+  </div>
+</div>
+
+<!-- Cart Overlay -->
+<div id="cartOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40" onclick="toggleCart()"></div>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white py-12">
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-4 gap-8">
+      <div>
+        <div class="flex items-center space-x-3 mb-4">
+          <span class="text-3xl">👟</span>
+          <h4 class="text-xl font-bold">SneakZone</h4>
+        </div>
+        <p class="text-gray-400">La référence sneakers depuis 2020</p>
+      </div>
+      <div>
+        <h5 class="font-bold mb-4">Shop</h5>
+        <ul class="space-y-2 text-gray-400">
+          <li><a href="#" class="hover:text-white">Nouveautés</a></li>
+          <li><a href="#" class="hover:text-white">Homme</a></li>
+          <li><a href="#" class="hover:text-white">Femme</a></li>
+          <li><a href="#" class="hover:text-white">Enfant</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="font-bold mb-4">Support</h5>
+        <ul class="space-y-2 text-gray-400">
+          <li><a href="#" class="hover:text-white">Contact</a></li>
+          <li><a href="#" class="hover:text-white">Guide des tailles</a></li>
+          <li><a href="#" class="hover:text-white">Livraison</a></li>
+          <li><a href="#" class="hover:text-white">Retours</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="font-bold mb-4">Suivez-nous</h5>
+        <div class="flex space-x-4">
+          <a href="#" class="text-2xl hover:text-blue-400">📘</a>
+          <a href="#" class="text-2xl hover:text-pink-400">📷</a>
+          <a href="#" class="text-2xl hover:text-blue-300">🐦</a>
+          <a href="#" class="text-2xl hover:text-red-400">📺</a>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+      <p>© 2024 SneakZone. Tous droits réservés.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
